@@ -1,7 +1,6 @@
 const { GraphQLScalarType } = require('graphql')
 const { Kind } = require('graphql/language')
 const { GraphQLDateTime } = require('graphql-iso-date')
-const PostController = require('../controllers/users.controller')
 
 const dateScalarType = new GraphQLScalarType({
 	name: 'Date',
@@ -23,16 +22,6 @@ const dateScalarType = new GraphQLScalarType({
 	},
 })
 
-const resolvers = {
-	Query: {
-		getUsers: () => PostController.getUsers()
-	},
-	Mutation: {
-		addUser: async (root, { name, username }) => {
-			return await PostController.addUser(name, username)
-		},
-	},
+module.exports = {
 	Date: GraphQLDateTime
-};
-
-module.exports = resolvers
+}

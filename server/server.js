@@ -5,10 +5,10 @@ const path = require('path');
 const { ApolloServer } = require('apollo-server-express');
 
 const serverConfig = require('./config');
-const typeDefs = require('./schemas/Schema')
-const resolvers = require('./schemas/Resolvers')
+const typeDefs = require('./schemas/typedefs/Index')
+const resolvers = require('./schemas/resolvers/Index')
 
-mongoose.connect('mongodb://localhost:27017/testingdb', { useNewUrlParser: true })
+mongoose.connect(serverConfig.mongoURL, { useNewUrlParser: true })
 
 const app = new Express();
 

@@ -3,8 +3,7 @@ const { gql } = require('apollo-server-express')
 const typeDefs = gql`
 scalar Date
 
-type Query{
-	"Commenting Example"
+extend type Query{
 	getUsers: [User]
 }
 
@@ -15,7 +14,7 @@ type User{
 	dateAdded: Date
 }
 
-type Mutation {
+extend type Mutation {
 	addUser(name: String!): User
 }
 
