@@ -1,13 +1,13 @@
-const PostController = require('../../controllers/users.controller')
+const UserController = require('../../controllers/users.controller')
 
 const resolvers = {
 	Query: {
-		getUsers: () => PostController.getUsers()
+		// getUsers: () => UserController.getUsers()
 	},
 	Mutation: {
-		addUser: async (root, { name, username }) => {
-			return await PostController.addUser(name, username)
-		},
+		/*addUser: async (root, args) => {
+			return await UserController.addUser(args)
+		},*/
 	}
 };
 

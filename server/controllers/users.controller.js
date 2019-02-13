@@ -1,28 +1,25 @@
 const Users = require('../models/users')
 
-var exportObj = {}
+let exportObj = {}
 
-exportObj.getUsers = async() => await Users.find()
+// exportObj.getUsers = async() => await Users.find()
 
-exportObj.addUser = async () => {
-	// console.log('Yo buddy!')
+exportObj.addUser = async ({ social_auth, social_id, name, username, profile_picture }) => {
 
 	var result;
-	var user = new Users
-	user.name = "Jitendra Purohit"
-	user.username = "jitujazz123"
-	await user.save()
-		.then((userRes) => {
-			result = userRes
-		})
-		.catch((err) => {
-			console.error("Error: " + err)
-		})
+	let user = new Users
+	user.social_auth = social_auth
+	user.social_id = social_id
+	user.name = name
+	user.username = username
+	user.profile_picture = profile_picture
 
+	result = await user.save()
 	return result
-
-
-	// return 'Yo Buddy!!!'
 }
+
+exportObj.getUserByUsername = async (username) => await Users.findOne({username})
+
+exportObj.getUserById = async (user_id) => await Users.findById(user_id)
 
 module.exports = exportObj

@@ -1,12 +1,15 @@
 const User = require('./User')
+const Auth = require('./Auth')
 const CustomScalar = require('./CustomScalar')
 
 const resolvers = {
 	Query: {
-		...User.Query
+		...User.Query,
+		...Auth.Query
 	},
 	Mutation: {
-		...User.Mutation
+		...User.Mutation,
+		...Auth.Mutation
 	},
 	...CustomScalar
 }
