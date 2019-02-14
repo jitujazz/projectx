@@ -39,7 +39,7 @@ exportObj.instaAuth = async (code, redirect_uri) => {
 		await clearSession(userDetails._id)
 	}
 
-	let session_id = await createSession(userDetails._id)
+	let session_id = await createSession(userDetails._id, access_token)
 
 	result = {
 		token: session_id,
@@ -50,15 +50,16 @@ exportObj.instaAuth = async (code, redirect_uri) => {
 	return result
 }
 
-const createSession = async (user_id) => {
+const createSession = async (user_id, access_token) => {
 	let usersessions = new UserSessions
 	usersessions.user_id = user_id
+	usersessions.token = access_token
 	let session = await usersessions.save()
 	return session._id
 }
 
 const clearSession = async (user_id) => {
-	await UserSessions.updateMany({user_id}, { isDeleted: true, dateDeleted: Date.now() })
+	await UserSessions.updateOne({ user_id, isDeleted: false }, { isDeleted: true, dateDeleted: Date.now() })
 	return true;
 }
 
@@ -70,7 +71,7 @@ exportObj.verifyToken = async (token) => {
 		})
 	if(session !== null)
 	{
-		let user = await UserController.getUserById(session._id)
+		let user = await UserController.getUserById(session.user_id)
 		if(user !== null)
 			return user
 		else

@@ -1,17 +1,16 @@
 const { GraphQLScalarType } = require('graphql')
 const { Kind } = require('graphql/language')
-const { GraphQLDateTime } = require('graphql-iso-date')
+const moment = require('moment')
 
 const dateScalarType = new GraphQLScalarType({
 	name: 'Date',
 	description: 'Date Custom Scalar Type',
 	parseValue(value) {
 		console.log("Parse: "+value)
-		return new Date(value); // value from the client
+		return moment(value).toISOString(); // value from the client
 	},
 	serialize(value) {
-		console.log("Serialize: "+value)
-		return value.getTime(); // value sent to the client
+		return moment(value).format("YYYY-MM-DD HH:mm:ss"); // value sent to the client
 	},
 	parseLiteral(ast) {
 		console.log("Literal: "+ast)
@@ -23,5 +22,5 @@ const dateScalarType = new GraphQLScalarType({
 })
 
 module.exports = {
-	Date: GraphQLDateTime
+	Date: dateScalarType
 }
